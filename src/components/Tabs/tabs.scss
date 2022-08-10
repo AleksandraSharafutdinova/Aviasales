@@ -1,0 +1,46 @@
+.tabs {
+  grid-area: tabs;
+  min-width: 502px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  background-color: white;
+  margin-bottom: 20px;
+}
+
+.tab-element {
+  background-color: #ffffff;
+  border: 1px solid #dfe5ec;
+  line-height: 50px;
+  width: 50%;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+}
+
+.tab-element:hover{
+  background: #2196fe;
+  border: 0;
+  color: #ffffff;
+}
+
+.tab-element-clicked{
+  background: #2196fe;
+  border: 0;
+  color: #ffffff;
+}
+
+.tab-cheapest {
+  border-right: 0;
+  border-radius: 5px 0 0 5px;
+}
+
+.tab-fastest {
+  border-right: 0;
+  border-radius: 0 0 0 0;
+}
+
+.tab-optimal {
+  border-left: 0;
+  border-radius: 0 5px 5px 0;
+}

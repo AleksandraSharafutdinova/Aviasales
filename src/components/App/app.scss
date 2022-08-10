@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap');
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.app {
+  background-color: #e5e5e5;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #4a4a4a;
+  padding-bottom: 120px;
+}
+
+.wrapper {
+  min-height: 100vh;
+  max-width: 754px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+
+}
+
+.header {
+  padding: 50px 0;
+  text-align: center;
+}
+
+.main {
+  flex: 1 1 auto;
+  display: grid;
+  grid-template-areas:
+          "sidebar tabs"
+          "sidebar spinner"
+          "sidebar ticket-list";
+}
