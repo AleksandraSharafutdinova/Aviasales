@@ -16,7 +16,9 @@ function App () {
     const [stop, setStop] = useState(false);
     const [sortedTickets, setSortedTickets] = useState([]);
     const [loading, setLoading] = useState(false);
-    //const [filter, setFilter] = useState({ all: false, without: false, one: false, two: false, three: false});
+
+
+    const [filter, setFilter] = useState({ all: true, without: true, one: true, two: true, three: true});
     const [sorterActive, setSorterActive] = useState({cheapest: true, fastest: false, optimal: false})
 
 
@@ -87,6 +89,7 @@ function App () {
             }
             if (sorterActive.fastest) {
                 return tickets1.sort((a, b) => (a.segments[0].duration + a.segments[1].duration) - (b.segments[0].duration + b.segments[1].duration))
+
             }
             if (sorterActive.optimal) {
                 // const tickCheap = tickets1.sort((a, b) => a.price - b.price);
@@ -99,11 +102,31 @@ function App () {
         }, [sorterActive]
     )
 
+    const filteredTickets = useCallback((tickArr) => {
+        //const myTickets = [...tickArr]
+        return tickArr.filter((current) =>{
+            if (filter.all) return current;
+            if (filter.without && current.segments[0].stops.length === 0 && current.segments[1].stops.length === 0) return true;
+            if (filter.one && current.segments[0].stops.length === 1 && current.segments[1].stops.length === 1) return true;
+            if (filter.two && current.segments[0].stops.length === 2 && current.segments[1].stops.length === 2) return true;
+            if (filter.three && current.segments[0].stops.length === 3 && current.segments[1].stops.length === 3) return true;
+            return false
+        })
+    },
+        [filter]
+    )
+
     useEffect(() => {
         if (stop) {
-            setSortedTickets(allSorter([...tickets.slice(0, 5)]))
+            setSortedTickets(allSorter(filteredTickets([...tickets.slice(0, 5)])))
         }
-    }, [stop, tickets, allSorter, setSorterActive])
+    }, [stop, tickets, allSorter, setSortedTickets, filteredTickets])
+
+    const showMoreTickets = () => {
+
+    }
+
+
 
 
     const spinner = loading ? <Spinner /> : null;
@@ -115,10 +138,13 @@ function App () {
                     <img src={Logo} alt='Логотип: Самолёт' />
                 </header>
                 <div className='main'>
-                    <Sidebar />
+                    <Sidebar filter={filter} setFilter={setFilter}/>
                     <Tabs  sorterActive={sorterActive} setSorterActive={setSorterActive}/>
                     {spinner}
                     <TicketList sortedTickets={sortedTickets} />
+                    <button className='show-more-tickets' onClick={showMoreTickets}>
+                        Показать еще 5 билетов
+                    </button>
                 </div>
             </div>
         </div>

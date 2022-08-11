@@ -37,5 +37,19 @@
   grid-template-areas:
           "sidebar tabs"
           "sidebar spinner"
-          "sidebar ticket-list";
+          "sidebar ticket-list"
+          "sidebar show-more-tickets";
+}
+
+.show-more-tickets {
+  grid-area: show-more-tickets;
+  background-color: #2196f3;
+  font-size: calc(6.33333px + .52083vw);
+  border: none;
+  border-radius: 5px;
+  height: 8vh;
+  max-height: 45px;
+  width: 100%;
+  color: #fff;
+  cursor: pointer;
 }

@@ -7,8 +7,8 @@ const Tabs = ({sorterActive, setSorterActive}) => {
     const sorterHandle = useCallback(
         (sortedButton) => {
             if (sorterActive[sortedButton]) return;
-            setSorterActive({optimal: !sorterActive['optimal'], cheapest: !sorterActive['cheapest'], fastest: !sorterActive['fastest']})
-        }, [sorterActive]);
+            setSorterActive({ cheapest: !sorterActive['cheapest'], fastest: !sorterActive['fastest'], optimal: !sorterActive['optimal'] })
+        }, [setSorterActive, sorterActive]);
 
     return (
         <div className='tabs'>
@@ -20,3 +20,5 @@ const Tabs = ({sorterActive, setSorterActive}) => {
 }
 
 export default Tabs;
+
+
