@@ -1,7 +1,7 @@
-import React, {useState} from "react";
+import React from "react";
 
-import Checker from '../../pictures/Checkbox.svg';
-import ChekerOn from '../../pictures/CheckboxOn.svg';
+//import Checker from '../../pictures/Checkbox.svg';
+//import ChekerOn from '../../pictures/CheckboxOn.svg';
 import './sidebar.scss';
 
 const Sidebar = ({filter, setFilter}) => {
@@ -25,13 +25,6 @@ const Sidebar = ({filter, setFilter}) => {
                 tempFilter['all'] = true
             }
         }
-
-        // if (!filter.without || !filter.one || !filter.three || !filter.two) {
-        //     tempFilter.all = false
-        // }
-        // if (filter.without && filter.one && filter.three && filter.two) {
-        //
-        // }
 
         setFilter({...tempFilter})
     }

@@ -9,6 +9,7 @@ import Logo from '../../pictures/Logo.svg';
 import './app.scss';
 
 
+
 function App () {
 
     const [searchId, setSearchId] = useState('');
@@ -16,10 +17,8 @@ function App () {
     const [stop, setStop] = useState(false);
     const [sortedTickets, setSortedTickets] = useState([]);
     const [loading, setLoading] = useState(false);
-
-
     const [filter, setFilter] = useState({ all: true, without: true, one: true, two: true, three: true});
-    const [sorterActive, setSorterActive] = useState({cheapest: true, fastest: false, optimal: false})
+    const [sorterActive, setSorterActive] = useState({cheapest: true, fastest: false, optimal: false});
 
 
     useEffect(() => {
@@ -58,29 +57,6 @@ function App () {
         }
     }, [searchId, tickets, stop])
 
-    // useEffect(() => {
-    //     if(searchId && !stop) {
-    //         async function subscribe() {
-    //             let response = await fetch(`https://front-test.dev.aviasales.ru/tickets?searchId=${searchId}`);
-    //             //console.log('response.status:', response.status)
-    //             if (response.status === 500) {
-    //                 await subscribe();
-    //             } else if (response.status === 404) {
-    //                 console.log('error 404')
-    //             } else if (response.status !== 200) {
-    //                 await new Promise((resolve) => setTimeout(resolve, 1000));
-    //                 await subscribe();
-    //             } else {
-    //                 let ticketsPart = await response.json();
-    //                 setTickets([...tickets, ...ticketsPart.tickets]);
-    //                 if (ticketsPart.stop) {
-    //                     setStop(true)
-    //                 }
-    //             }
-    //         }
-    //         subscribe();
-    //     }
-    // }, [searchId, tickets, stop]);
 
     const allSorter = useCallback(
         (tickets1) => {
