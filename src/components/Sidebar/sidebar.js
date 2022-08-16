@@ -1,11 +1,15 @@
-import React from "react";
+import React, {useCallback} from "react";
 
 //import Checker from '../../pictures/Checkbox.svg';
 //import ChekerOn from '../../pictures/CheckboxOn.svg';
 import './sidebar.scss';
+import {useDispatch, useSelector} from "react-redux";
+
 
 const Sidebar = ({filter, setFilter}) => {
-
+    const checkBoxList = useSelector((state) => state.reducer.checkBoxTransfers);
+    const dispatch = useDispatch();
+    console.log(checkBoxList)
 
     const allHandler = (filt) => {
         let tempFilter = {...filter};

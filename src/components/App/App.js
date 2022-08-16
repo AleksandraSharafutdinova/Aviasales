@@ -7,7 +7,7 @@ import Spinner from "../Spinner";
 
 import Logo from '../../pictures/Logo.svg';
 import './app.scss';
-
+import {createStore} from "redux";
 
 
 function App () {
@@ -57,6 +57,29 @@ function App () {
         }
     }, [searchId, tickets, stop])
 
+    // useEffect(() => {
+    //     if(searchId && !stop) {
+    //         async function subscribe() {
+    //             let response = await fetch(`https://front-test.dev.aviasales.ru/tickets?searchId=${searchId}`);
+    //             //console.log('response.status:', response.status)
+    //             if (response.status === 500) {
+    //                 await subscribe();
+    //             } else if (response.status === 404) {
+    //                 console.log('error 404')
+    //             } else if (response.status !== 200) {
+    //                 await new Promise((resolve) => setTimeout(resolve, 1000));
+    //                 await subscribe();
+    //             } else {
+    //                 let ticketsPart = await response.json();
+    //                 setTickets([...tickets, ...ticketsPart.tickets]);
+    //                 if (ticketsPart.stop) {
+    //                     setStop(true)
+    //                 }
+    //             }
+    //         }
+    //         subscribe();
+    //     }
+    // }, [searchId, tickets, stop]);
 
     const allSorter = useCallback(
         (tickets1) => {
