@@ -64,9 +64,24 @@
 //     toggleStop,
 //     ticketsError,
 // }
-export const GET_TRANSFERS = 'GET_TRANSFERS'
+export const GET_TRANSFERS = 'GET_TRANSFERS';
+export const GET_FILTERED_TICKETS = 'GET_FILTERED_TICKETS';
+export const GET_TICKETS_ALL = 'GET_TICKETS_ALL'
 
-export const getCheckBoxTransfers = (payload) => ({
+export const getCheckBoxTransfers = (newData) => ({
     type: GET_TRANSFERS,
+    payload: newData
+});
+
+export const getFilteredTicketsTabs = (payload) => ({
+    type: GET_FILTERED_TICKETS,
+    payload
+});
+
+export const getTicketsAll = (payload) => ({
+    type: GET_TICKETS_ALL,
     payload
 })
+
+
+

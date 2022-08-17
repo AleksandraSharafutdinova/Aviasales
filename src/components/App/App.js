@@ -7,16 +7,15 @@ import Spinner from "../Spinner";
 
 import Logo from '../../pictures/Logo.svg';
 import './app.scss';
-import {createStore} from "redux";
-
+//import ApiService from "../../services/ApiService";
 
 function App () {
+
 
     const [searchId, setSearchId] = useState('');
     const [tickets, setTickets] = useState([]);
     const [stop, setStop] = useState(false);
     const [sortedTickets, setSortedTickets] = useState([]);
-    const [loading, setLoading] = useState(false);
     const [filter, setFilter] = useState({ all: true, without: true, one: true, two: true, three: true});
     const [sorterActive, setSorterActive] = useState({cheapest: true, fastest: false, optimal: false});
 
@@ -33,7 +32,6 @@ function App () {
     useEffect(() => {
         if (searchId && !stop) {
             function subscribe () {
-                setLoading(true)
                 fetch(`https://front-test.dev.aviasales.ru/tickets?searchId=${searchId}`)
                     .then((data) => {
                         if (data.status === 500) {
@@ -53,33 +51,9 @@ function App () {
                     });
             }
             subscribe()
-            setLoading(false)
         }
     }, [searchId, tickets, stop])
 
-    // useEffect(() => {
-    //     if(searchId && !stop) {
-    //         async function subscribe() {
-    //             let response = await fetch(`https://front-test.dev.aviasales.ru/tickets?searchId=${searchId}`);
-    //             //console.log('response.status:', response.status)
-    //             if (response.status === 500) {
-    //                 await subscribe();
-    //             } else if (response.status === 404) {
-    //                 console.log('error 404')
-    //             } else if (response.status !== 200) {
-    //                 await new Promise((resolve) => setTimeout(resolve, 1000));
-    //                 await subscribe();
-    //             } else {
-    //                 let ticketsPart = await response.json();
-    //                 setTickets([...tickets, ...ticketsPart.tickets]);
-    //                 if (ticketsPart.stop) {
-    //                     setStop(true)
-    //                 }
-    //             }
-    //         }
-    //         subscribe();
-    //     }
-    // }, [searchId, tickets, stop]);
 
     const allSorter = useCallback(
         (tickets1) => {
@@ -126,10 +100,6 @@ function App () {
     }
 
 
-
-
-    const spinner = loading ? <Spinner /> : null;
-
     return (
         <div className='app'>
             <div className='wrapper'>
@@ -139,7 +109,7 @@ function App () {
                 <div className='main'>
                     <Sidebar filter={filter} setFilter={setFilter}/>
                     <Tabs  sorterActive={sorterActive} setSorterActive={setSorterActive}/>
-                    {spinner}
+
                     <TicketList sortedTickets={sortedTickets} />
                     <button className='show-more-tickets' onClick={showMoreTickets}>
                         Показать еще 5 билетов

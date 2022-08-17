@@ -32,11 +32,12 @@
 
 .tab-cheapest {
   border-right: 0;
-  border-radius: 5px 0 0 5px;
+  border-radius: 5px 0 0 0;
 }
 
 .tab-fastest {
   border-right: 0;
+  border-left: 0;
   border-radius: 0 0 0 0;
 }
 

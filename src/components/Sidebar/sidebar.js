@@ -1,23 +1,36 @@
-import React, {useCallback} from "react";
+import React from "react";
 
 //import Checker from '../../pictures/Checkbox.svg';
 //import ChekerOn from '../../pictures/CheckboxOn.svg';
 import './sidebar.scss';
 import {useDispatch, useSelector} from "react-redux";
+import {GET_TRANSFERS} from "../../actions";
 
 
 const Sidebar = ({filter, setFilter}) => {
     const checkBoxList = useSelector((state) => state.reducer.checkBoxTransfers);
     const dispatch = useDispatch();
+    //console.log(checkBoxList)
+
+    const onTrying = () => {
+        const newData = checkBoxList.map((el) => ({
+             ...el, isChecked: !isChecked
+        }))
+        return dispatch({type: GET_TRANSFERS, payload: newData})
+    }
     console.log(checkBoxList)
+
+
+
+
 
     const allHandler = (filt) => {
         let tempFilter = {...filter};
         tempFilter[filt] = !tempFilter[filt]
         if (filt === 'all') {
-                tempFilter = Object.fromEntries(Object.keys(tempFilter).map((current) => {
-                    return [current, tempFilter[filt]]
-                }));
+            tempFilter = Object.fromEntries(Object.keys(tempFilter).map((current) => {
+                return [current, tempFilter[filt]]
+            }));
 
         } else {
             if (Object.keys(tempFilter).some((key) => tempFilter[key] === false)) {
@@ -49,7 +62,8 @@ const Sidebar = ({filter, setFilter}) => {
                     <input type='checkbox'
                            className='input visually-hidden'
                            onChange={() => allHandler('without')}
-                           checked={filter.without}/>
+                           checked={filter.without}
+                           onClick={onTrying}/>
                     <span className='checker' />
                     Без пересадок
                 </label>
