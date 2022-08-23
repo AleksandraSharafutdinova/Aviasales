@@ -1,15 +1,14 @@
 import {GET_TICKETS_ALL} from "../actions";
 
 const initialState = {
-    tickets: [],
-
-}
+    tick: []
+};
 
 const reducerTickets = (state = initialState, action) => {
 
     switch (action.type) {
-         case GET_TICKETS_ALL:
-             return {...state, tickets: action.payload}
+        case GET_TICKETS_ALL:
+             return {... state, tick: action.ticketsPart};
 
         default:
             return state;
@@ -17,3 +16,4 @@ const reducerTickets = (state = initialState, action) => {
 };
 
 export default reducerTickets;
+

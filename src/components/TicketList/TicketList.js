@@ -1,29 +1,34 @@
 import React from "react";
-
 import Ticket from "../Ticket";
-
 import './TicketList.scss';
+import {useDispatch, useSelector} from "react-redux";
+import {useEffect, useState} from "react";
 
-const TicketList = ({sortedTickets}) => {
-    const elements = sortedTickets.map((ticket) => {
-        return (
-            <Ticket
-                key={ticket.price + ticket.segments[1].origin}
-                price={ticket.price}
-                carrier={ticket.carrier}
-                destination={ticket.segments[0].destination}
-                origin={ticket.segments[0].origin}
-                date={ticket.segments[0].date}
-                duration={ticket.segments[0].duration}
-                stops={ticket.segments[0].stops}
-                destination1={ticket.segments[1].destination}
-                origin1={ticket.segments[1].origin}
-                date1={ticket.segments[1].date}
-                duration1={ticket.segments[1].duration}
-                stops1={ticket.segments[1].stops}
-            />
-        )
-    })
+
+const TicketList = () => {
+    const ticketsAll = useSelector((state) => state.reducerTickets.tick);
+    const tickNum = useSelector((state) => state.reducerShowMore.numberTickets)
+    const [partTickets, setPartTickets] = useState([]);
+    const [elements, setElements] = useState([]);
+
+    const tabsFilter = useSelector((state) => state.reducerTabs.filteredTabs);
+    const sidebarFilter = useSelector((state) => state.reducer.checkBoxTransfers);
+    const dispatch = useDispatch();
+
+
+    useEffect(() => {
+        console.log(tickNum)
+        if(ticketsAll.length > 0) {
+            setPartTickets([...ticketsAll.slice(0, tickNum)])
+        }
+    }, [ticketsAll])
+
+    useEffect(() => {
+        if (partTickets.length > 0) {
+            setElements(partTickets.map((ticket) => <Ticket key={`${ticket.price}${ticket.carrier}`} ticket={ticket}/>
+            ))
+        }
+    }, [partTickets])
 
 
     return (

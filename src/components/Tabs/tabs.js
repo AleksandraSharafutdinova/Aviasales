@@ -1,33 +1,46 @@
-import React, {useCallback} from "react";
-
+import React from "react";
 import './tabs.scss';
 import {useDispatch, useSelector} from "react-redux";
+import { getFilteredTicketsTabs} from '../../actions'
 
-const Tabs = ({sorterActive, setSorterActive}) => {
 
+const Tabs = () => {
     const tabsList = useSelector((state) => state.reducerTabs.filteredTabs);
     const dispatch = useDispatch();
-    //console.log(tabsList)
 
+    const tabsFilters = [...tabsList].map(({label, id, isActive}) =>{
+        let className;
 
+        if (isActive) {
+            className = 'tab-element tab-element-clicked'
+        } else {
+            className = 'tab-element'
+        }
 
-    const sorterHandle = useCallback(
-        (sortedButton) => {
-            if (sorterActive[sortedButton]) return;
-            setSorterActive({ cheapest: !sorterActive['cheapest'], fastest: !sorterActive['fastest'], optimal: !sorterActive['optimal'] })
-        }, [setSorterActive, sorterActive]);
+        const onClick = () => {
+            const newArr = [...tabsList].map((el) => {
+                if (el.id === id) {
+                    el.isActive = true;
+                } else {
+                    el.isActive = false;
+                }
+                return el;
+            })
+            dispatch(getFilteredTicketsTabs(newArr))
+        }
+
+        return (
+            <div key={id} className={className} onClick={onClick}>
+                {label}
+            </div>
+        )
+    })
 
     return (
         <div className='tabs'>
-            <div className={`tab-element tab-cheapest ${sorterActive.cheapest ? 'tab-element-clicked' : ''} `} onClick={() => sorterHandle('cheapest')}>{tabsList[0].label}</div>
-            <div className={`tab-element tab-fastest ${sorterActive.fastest ? 'tab-element-clicked' : ''} `} onClick={() => sorterHandle('fastest')}>{tabsList[1].label}</div>
-            <div className={`tab-element tab-optimal ${sorterActive.optimal ? 'tab-element-clicked' : ''} `} onClick={() => sorterHandle('optimal')}>{tabsList[2].label}</div>
+            {tabsFilters}
         </div>
     )
 }
 
 export default Tabs;
-
-
-
-

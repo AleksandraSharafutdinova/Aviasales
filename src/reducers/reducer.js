@@ -14,11 +14,12 @@ const reducer = (state = initialState, action) => {
 
     switch (action.type) {
         case GET_TRANSFERS:
-            return {...state, checkBoxTransfers: action.payload};
+            return { ...state, checkBoxTransfers: action.payload};
 
         default:
             return state;
     }
+
 };
 
 export default reducer;

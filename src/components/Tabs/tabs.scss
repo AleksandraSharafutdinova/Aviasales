@@ -30,18 +30,13 @@
   color: #ffffff;
 }
 
-.tab-cheapest {
+.tab-element:first-child {
   border-right: 0;
-  border-radius: 5px 0 0 0;
+  border-radius: 5px 0 0 5px;
 }
 
-.tab-fastest {
+.tab-element:last-child {
   border-right: 0;
-  border-left: 0;
-  border-radius: 0 0 0 0;
-}
-
-.tab-optimal {
   border-left: 0;
   border-radius: 0 5px 5px 0;
 }

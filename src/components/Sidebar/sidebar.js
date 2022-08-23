@@ -1,96 +1,81 @@
 import React from "react";
-
+import {useDispatch, useSelector} from "react-redux";
 //import Checker from '../../pictures/Checkbox.svg';
 //import ChekerOn from '../../pictures/CheckboxOn.svg';
 import './sidebar.scss';
-import {useDispatch, useSelector} from "react-redux";
-import {GET_TRANSFERS} from "../../actions";
+import {getCheckBoxTransfers} from '../../actions'
 
 
-const Sidebar = ({filter, setFilter}) => {
+const Sidebar = () => {
+    let countFilters = 0;
     const checkBoxList = useSelector((state) => state.reducer.checkBoxTransfers);
     const dispatch = useDispatch();
-    //console.log(checkBoxList)
 
-    const onTrying = () => {
-        const newData = checkBoxList.map((el) => ({
-             ...el, isChecked: !isChecked
-        }))
-        return dispatch({type: GET_TRANSFERS, payload: newData})
-    }
-    console.log(checkBoxList)
-
-
-
-
-
-    const allHandler = (filt) => {
-        let tempFilter = {...filter};
-        tempFilter[filt] = !tempFilter[filt]
-        if (filt === 'all') {
-            tempFilter = Object.fromEntries(Object.keys(tempFilter).map((current) => {
-                return [current, tempFilter[filt]]
-            }));
-
-        } else {
-            if (Object.keys(tempFilter).some((key) => tempFilter[key] === false)) {
-                tempFilter['all'] = false
-            }
-            if (Object.keys(tempFilter).every((key) => {
-                if(key === 'all') return true;
-                return tempFilter[key] === true})) {
-                tempFilter['all'] = true
-            }
+    const filterTransfers = [...checkBoxList].map(({label, id, isChecked}) => {
+        if (isChecked) {
+            countFilters += 1;
         }
 
-        setFilter({...tempFilter})
-    }
+        const onChange = (e) => {
+            const newArrFilters = [...checkBoxList];
+
+            if (id === 'all' && isChecked === false) {
+                newArrFilters.map((el) => {
+                    el.isChecked = true;
+                    return el;
+                });
+            }
+
+            if (id === 'all' && isChecked === true) {
+                newArrFilters.map((el) => {
+                    el.isChecked = false;
+                    return el;
+                });
+            }
+
+            if (id !== 'all') {
+                newArrFilters.map((el) => {
+                    if (el.id === id) {
+                        el.isChecked = e.target.checked;
+                        if (!e.target.checked) {
+                            countFilters -= 1;
+                        }
+                    }
+                    if (el.id === 'all') {
+                        el.isChecked = false;
+                    }
+                    return el;
+                });
+            }
+
+            if (countFilters === 3 && id !== 'all') {
+                newArrFilters.map((el) => {
+                    el.isChecked = true;
+                    return el;
+                });
+            }
+            dispatch(getCheckBoxTransfers(newArrFilters))
+        };
+
+        return (
+            <label key={id}>
+                <input type='checkbox'
+                       onChange={onChange}
+                       checked={isChecked}
+                       className='input visually-hidden' />
+                <span className='checker' />
+                {label}
+            </label>
+        )
+    })
+
+
 
     return (
         <div className='sidebar'>
             <h3>Количество пересадок</h3>
             <form>
-                <label>
-                    <input type='checkbox'
-                           className='input visually-hidden'
-                           onChange={() => allHandler('all')}
-                           checked={filter.all}/>
-                    <span className='checker' />
-                    Все
-                </label>
-                <label>
-                    <input type='checkbox'
-                           className='input visually-hidden'
-                           onChange={() => allHandler('without')}
-                           checked={filter.without}
-                           onClick={onTrying}/>
-                    <span className='checker' />
-                    Без пересадок
-                </label>
-                <label>
-                    <input type='checkbox'
-                           className='input visually-hidden'
-                           onChange={() => allHandler('one')}
-                           checked={filter.one}/>
-                    <span className='checker' />
-                    1 пересадка
-                </label>
-                <label>
-                    <input type='checkbox'
-                           className='input visually-hidden'
-                           onChange={() => allHandler('two')}
-                           checked={filter.two}/>
-                    <span className='checker' />
-                    2 пересадки
-                </label>
-                <label>
-                    <input type='checkbox'
-                           className='input visually-hidden'
-                           onChange={() => allHandler('three')}
-                           checked={filter.three}/>
-                    <span className='checker' />
-                    3 пересадки
-                </label>
+                {filterTransfers}
             </form>
         </div>
     )
