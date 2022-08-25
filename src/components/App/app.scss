@@ -36,6 +36,7 @@
   display: grid;
   grid-template-areas:
           "sidebar tabs"
+          "sidebar warnings"
           "sidebar spinner"
           "sidebar ticket-list"
           "sidebar show-more-tickets";

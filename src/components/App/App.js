@@ -67,7 +67,6 @@ function App () {
     const showMoreTickets = () => {
         const newTickNum = tickNums + 5
         dispatch(getMoreTickets(newTickNum))
-        //console.log(newTickNum + ' clicked')
     }
 
     const spinner = load ? <Spinner /> : null;
@@ -83,7 +82,7 @@ function App () {
                     <Sidebar />
                     <Tabs  />
                     {spinner}
-                    <TicketList  />
+                    <TicketList load={load} />
                     <button className='show-more-tickets' onClick={showMoreTickets}>
                         Показать еще 5 билетов
                     </button>
